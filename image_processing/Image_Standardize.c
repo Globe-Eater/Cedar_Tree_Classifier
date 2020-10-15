@@ -19,10 +19,10 @@ int main() {
     
     // create a quarter section from trees
     size_t trees_size = width * height * channels;
-    size_t small_trees_size = (width * 0.25) * (height * 0.25) * channels;
+    size_t small_trees_size = tree_size / 4;
     printf("This is small_trees_size: %lu\n", small_trees_size);
     
-    int small_width = width * 0.25 * channels;
+    int small_width = width * 0.25 * channels; // this need to be changed to a dimension that lines up with trees proporsionaltely
     int small_height = height * 0.25 * channels;
 
     // allocating memory to save small_trees:
@@ -33,11 +33,11 @@ int main() {
     }
 
     // iterate through old image. Write old image quadrant to new image.
-    for (unsigned char *p = trees, *pn = small_trees; pn != small_trees + small_trees_size; p += channels, pn += channels) {
+    for (unsigned char *p = trees, *pn = small_trees; pn != small_trees + small_trees_size; p ++, pn ++) {
         *pn = (*p);
     }
     
-    stbi_write_jpg("/Users/kellenbullock/Desktop/small_trees.jpg", small_width, small_height, channels, small_trees, 100);
+    stbi_write_jpg("/Users/kellenbullock/Desktop/small_trees.jpg", width, height, channels, small_trees, 100);
 
     stbi_image_free(small_trees);    
     stbi_image_free(trees);
