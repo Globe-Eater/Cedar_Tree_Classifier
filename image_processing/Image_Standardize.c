@@ -1,36 +1,38 @@
-#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-#define STB_IMAGE_WRITE_IMPLEMENTATION
-#define STB_IMAGE_RESIZE_IMPLEMENTATION
 #define STB_IMAGE_IMPLEMENTATION
-
-#include "stb_image_write.h"
-#include "stb_image_resize.h"
 #include "stb_image.h"
-
-#define CHANNEL_NUM 3
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include "stb_image_write.h"
 
 int main() {
-    int width, height, bpp;
-    int outw, outh = 800;
 
-    uint8_t* trees_big = stbi_load("Z3S3 copy.jpeg", &width, &height, &bpp, 3);    
-    uint8_t* trees_small;
+    int width, height, channels; 
 
-    printf("The trees_big width is: %d\n", width);
-    printf("The trees_big height is: %d\n", height);
+    unsigned char *trees = stbi_load("/Users/kellenbullock/Desktop/Natural_Resources_Project/datasets/raw_images/Z3S3.jpg", &width, &height, &channels, 3);
+    if (trees == NULL) {
+        printf("Image has failed to load.\n");
+        exit(1);
+    } 
+    printf("Loaded image with a width of %dpx, a height of %dpx and %d channels\n", width, height, channels);
+    
+    // create a quarter section from trees
+    size_t trees_size = width * height * channels;
+    size_t small_trees_size = (width * 0.25) * (height * 0.25) * channels;
+    printf("This is small_trees_size: %lu\n", small_trees_size);
 
-    // attempting to resize Z3S3 copy.jpeg...
-    stbir_resize_uint8(      trees_big , width , height , 0,
-                               trees_small, outw, outh, 0, CHANNEL_NUM);
+    // allocating memory to save small_trees:
+    unsigned char *small_trees = malloc(small_trees_size);
+    if(small_trees == NULL) {
+        printf("Unable to allocate memory for the smaller image.\n");
+        exit(1);
+    }
 
-    printf("Trees_small width is: %d\n", outw);
-    printf("Trees_small height is: %d\n", outh);
+    
 
-    //stbi_write_jpg("trees_small.jpeg", outw, outh, CHANNEL_NUM, trees_small, width*CHANNEL_NUM);
-
-    stbi_image_free(trees_big);
-    stbi_image_free(trees_small);
-
+    
+    stbi_image_free(small_trees);    
+    stbi_image_free(trees);
     return 0;
 }
