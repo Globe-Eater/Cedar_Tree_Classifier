@@ -21,6 +21,9 @@ int main() {
     size_t trees_size = width * height * channels;
     size_t small_trees_size = (width * 0.25) * (height * 0.25) * channels;
     printf("This is small_trees_size: %lu\n", small_trees_size);
+    
+    int small_width = width * 0.25 * channels;
+    int small_height = height * 0.25 * channels;
 
     // allocating memory to save small_trees:
     unsigned char *small_trees = malloc(small_trees_size);
@@ -29,9 +32,13 @@ int main() {
         exit(1);
     }
 
+    // iterate through old image. Write old image quadrant to new image.
+    for (unsigned char *p = trees, *pn = small_trees; pn != small_trees + small_trees_size; p += channels, pn += channels) {
+        *pn = (*p);
+    }
     
+    stbi_write_jpg("/Users/kellenbullock/Desktop/small_trees.jpg", small_width, small_height, channels, small_trees, 100);
 
-    
     stbi_image_free(small_trees);    
     stbi_image_free(trees);
     return 0;
