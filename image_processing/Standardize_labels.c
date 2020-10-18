@@ -30,14 +30,14 @@ int main() {
     // iterate through old image. Replace values between 0 and 1 with 0. 
     for (unsigned char *p = trees, *pn = labels; p != trees + trees_size; p += channels, pn += channels) {
         //printf("Old Value %d    New Value %d\n", *p, *pn);  
-        if (*p > 0) {                               // RED
-           *pn = 255;
+        if (*p < 250) {                               // RED
+           *pn = 50;
         }
-        if (*(p+1) > 0) {                           // Blue
-           *(pn + 1) = 255;
+        if (*(p+1) < 250) {                           // Blue
+           *(pn + 1) = 50;
         }
-        if (*(p+2) > 0) {                           // Green
-           *(pn + 2) = 255;
+        if (*(p+2) < 250) {                           // Green
+           *(pn + 2) = 50;
         }
     }
 
