@@ -28,17 +28,24 @@ int main() {
     }
 
     // iterate through old image. Replace values between 0 and 1 with 0. 
-    for (unsigned char *p = trees, *pn = labels; p != trees + trees_size; p += channels, pn += channels) {
-        //printf("Old Value %d    New Value %d\n", *p, *pn);  
-        if (*p < 250) {                               // RED
-           *pn = 50;
+    for (unsigned char *p = trees, *pn = labels; p != trees + trees_size; p += channels, pn += channels) {  
+        //Convert to grayscale
+        *pn = (uint8_t)((*p + *(p + 1) + *(p + 2))/3.0);
+        if(channels == 4) {
+            *(pn + 1) = *(p + 3);
         }
-        if (*(p+1) < 250) {                           // Blue
-           *(pn + 1) = 50;
-        }
-        if (*(p+2) < 250) {                           // Green
-           *(pn + 2) = 50;
-        }
+        //if (*p < 255) {                               // RED
+        //   *pn = 0;
+        //}
+        //if (*(p+1) < 255) {                           // Blue
+        //   *(pn + 1) = 0;
+        //}
+        //if (*(p+2) < 255) {                           // Green
+        //   *(pn + 2) = 0;
+        //}
+        //if (*(pn + 3) < 255) {
+        //    *(pn + 3) = 0;
+        //}
     }
 
     stbi_write_jpg("/Users/kellenbullock/Desktop/Labels.jpg", width, height, channels, labels, 100);
