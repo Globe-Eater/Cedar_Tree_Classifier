@@ -16,13 +16,61 @@ import tensorflow as tf
 from tensorflow import keras
 import numpy as np
 from tensorflow.keras import layers
+import random
 
-input_data = "/Users/kellenbullock/Desktop/square_trees.jpg"
-target_data = "/Users/kellenbullock/Desktop/Labels_2.png"
-img_size = (480, 480)
+input_data_path = "/Users/kellenbullock/Desktop/Natural_Resources_Project/datasets/raw_images/"
+target_data_path = "/Users/kellenbullock/Desktop/Natural_Resources_Project/datasets/labeled_images/"
+img_size = (160, 160)
 num_classes = 2
 batch_size = 32
 
+# Combining 
+input_img_paths = sorted(
+    [
+         os.path.join(input_data_path, fname)
+         for fname in os.listdir(input_data_path)
+         if fname.endswith(".png")
+     ]
+)
+target_img_paths = sorted(
+    [
+         os.path.join(target_data_path, fname)
+         for fname in os.listdir(target_data_path)
+         if fname.endswith(".png")
+     ]
+)
+print("Number of samples:", len(input_img_paths))
+for input_path, target_path in zip(input_img_paths, target_img_paths):
+    print(input_path, "|", target_path)
+
+class Cedar_Trees(keras.utils.Sequence):
+    """Helper to iterate over the data (as Numpy arrays)."""
+
+    def __init__(self, batch_size, img_size, input_img_paths, target_img_paths):
+        self.batch_size = batch_size
+        self.img_size = img_size
+        self.input_img_paths = input_img_paths
+        self.target_img_paths = target_img_paths
+
+    def __len__(self):
+        return len(self.target_img_paths) // self.batch_size
+
+    def __getitem__(self, idx):
+        """Returns tuple (input, target) correspond to batch #idx."""
+        i = idx * self.batch_size
+        batch_input_img_paths = self.input_img_paths[i : i + self.batch_size]
+        batch_target_img_paths = self.target_img_paths[i : i + self.batch_size]
+        x = np.zeros((batch_size,) + self.img_size + (3,), dtype="float32")
+        for j, path in enumerate(batch_input_img_paths):
+            img = load_img(path, target_size=self.img_size)
+            x[j] = img
+        y = np.zeros((batch_size,) + self.img_size + (1,), dtype="uint8")
+        for j, path in enumerate(batch_target_img_paths):
+            img = load_img(path, target_size=self.img_size, color_mode="grayscale")
+            y[j] = np.expand_dims(img, 2)
+        return x, y
+
+''' Backup plan:
 X = load_img(input_data, target_size=img_size, interpolation='nearest')
 Y = load_img(target_data, target_size=img_size, color_mode="grayscale", interpolation='nearest')
 
@@ -34,11 +82,7 @@ independents = independents.reshape(-1, 480, 480, 3) #np.expand_dims(X, 2)
     
 dependents = np.zeros((batch_size,) + img_size + (1,), dtype="float32")
 dependents = dependents.reshape(-1, 480, 480, 1) #np.expand_dims(Y, 2)
-
-### Creation of lists training : target data:
-
-### object creation:
-
+'''
 
 def get_model(img_size, num_classes):
     inputs = keras.Input(shape=img_size + (3,))
@@ -101,28 +145,40 @@ def get_model(img_size, num_classes):
 # Build model
 model = get_model(img_size, num_classes)
 
+# Split our img paths into a training and a validation set
+val_samples = 4
+random.Random(1337).shuffle(input_img_paths)
+random.Random(1337).shuffle(target_img_paths)
+train_input_img_paths = input_img_paths[-val_samples:]
+train_target_img_paths = target_img_paths[-val_samples:]
+val_input_img_paths = input_img_paths[-val_samples:]
+val_target_img_paths = target_img_paths[-val_samples:]
+
+# Create dataset:
+training = Cedar_Trees(batch_size, img_size, input_img_paths, target_img_paths)
+val_gen = Cedar_Trees(batch_size, img_size, val_input_img_paths, val_target_img_paths)
+
 model.compile(optimizer="rmsprop", loss="sparse_categorical_crossentropy")
 callbacks = [keras.callbacks.ModelCheckpoint("Tree_segmentation.h5", save_best_only=True)]
-model.fit(x=independents, y=dependents, epochs=10, callbacks=callbacks, verbose=1)
+model.fit(training, epochs=10, callbacks=callbacks, verbose=1)
 
-val_data = "/Users/kellenbullock/Desktop/Natural_Resources_Project/datasets/raw_images/Z2S3.jpg"
-validation = load_img(val_data, target_size=img_size, interpolation='nearest')
 
-display(validation)
-v = tf.keras.preprocessing.image.img_to_array(validation)
+val_preds = model.predict(val_gen)
 
-validation = np.zeros((batch_size,) + img_size + (3,), dtype="float32")
-validation = validation.reshape(-1, 480, 480, 3) #np.expand_dims(X, 2)
-
-val_preds = [dependents]
-
-#val_preds.append(model.predict(validation))
-result = model.predict(validation)
-test = result.reduce
-
-mask = np.argmax(val_preds[1], axis=-1)
-mask = np.expand_dims(mask, axis=-1)
-img = keras.preprocessing.image.array_to_img(mask)
+def display_mask(i):
+    """Quick utility to display a model's prediction."""
+    mask = np.argmax(val_preds[i], axis=-1)
+    mask = np.expand_dims(mask, axis=-1)
+    img = PIL.ImageOps.autocontrast(keras.preprocessing.image.array_to_img(mask))
+    display(img)
+    
+# Display results for validation image #10
+i = 1
+# Display input image
+display(Image(filename=val_input_img_paths[i]))
+# Display ground-truth target mask
+img = PIL.ImageOps.autocontrast(load_img(val_target_img_paths[i]))
 display(img)
-
+# Display mask predicted by our model
+display_mask(i)  # Note that the model only sees inputs at 150x150.
 
