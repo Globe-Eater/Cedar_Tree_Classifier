@@ -10,7 +10,7 @@ int main() {
 
     int width, height, channels;
 
-    unsigned char *trees = stbi_load("/Users/kellenbullock/Desktop/Natural_Resources_Project/datasets/Labels2.jpg", &width, &height, &channels, 3);
+    unsigned char *trees = stbi_load("/Users/kellenbullock/Desktop/Natural_Resources_Project/datasets/Backup_images/Z2S3_Labels.jpg", &width, &height, &channels, 3);
     if (trees == NULL) {
         printf("Image has failed to load.\n");
         exit(1);
@@ -48,9 +48,22 @@ int main() {
         if (*(pn + 3) < 255) {
             *(pn + 3) = 0;
         }
+        // Converting to binary values 1 & 0:
+        if (*p >= 254) {
+            *pn = 1;
+        }
+        if (*(p+1) >= 254) {
+            *(pn+1) = 1;
+        }
+        if (*(p+2) >= 254) {
+            *(pn+2) = 1;
+        }
+        if (*(p+3) >= 254) {
+            *(pn+3) = 1;
+        }
     }
 
-    stbi_write_png("/Users/kellenbullock/Desktop/Labels.png", width, height, gray_channels, labels, width * gray_channels);
+    stbi_write_png("/Users/kellenbullock/Desktop/Z2S3_Labels.png", width, height, gray_channels, labels, width * gray_channels);
     //stbi_write_jpg("/Users/kellenbullock/Desktop/Labels.jpg", width, height, channels, labels, 100);
 
     stbi_image_free(labels);
