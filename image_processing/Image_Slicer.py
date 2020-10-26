@@ -5,55 +5,70 @@ Created on Sat Oct 24 16:36:51 2020
 
 @author: kellenbullock
 """
-
+import os
 from IPython.display import Image, display
 from PIL import Image
 
-input_data = "/users/kellenbullock/Desktop/Labels.png"
-big_img = Image.open(input_data)
+input_data_path = "/Users/kellenbullock/Desktop/Natural_Resources_Project/datasets/Unclassified/"
 
-#big_img.show()
-# left, up, right, bottom
+input_img_paths = sorted(
+    [
+         os.path.join(input_data_path, fname)
+         for fname in os.listdir(input_data_path)
+         if fname.endswith(".jpg")
+     ]
+)
 
-# First row
-left = 86
-up = 104
-right = 160 + 86 
-bottom = 160 + 104
+for x in input_img_paths:
+    big_img = Image.open(x)
+    
+    sections = []
+    # First row
+    left = 86
+    up = 104
+    right = 160 + 86 
+    bottom = 160 + 104
+    
+    i = up
+    while i <= 960:
+        dims = (left + i, up, right + i, bottom)
+        secs = big_img.crop(dims)
+        sections.append(secs)
+        i = i + 160
+        
+    # Second Row
+    
+    left = 86
+    up = 160 + 104
+    right = 160 + 86
+    bottom= 320 + 104
+    
+    i = up
+    while i <= 960:
+        dims = (left + i, up, right + i, bottom)
+        secs = big_img.crop(dims)
+        sections.append(secs)
+        i = i + 160
+    
+    # Third Row
+    
+    left = 86
+    up = 320 + 104
+    right = 160 + 86
+    bottom = 480 + 104
+    
+    i = up
+    while i <= 960:
+        dims = (left + i, up, right + i, bottom)
+        secs = big_img.crop(dims)
+        sections.append(secs)
+        i = i + 160
+    n = 0
+    for i in sections:
+        i.save("/Users/kellenbullock/Desktop/Natural_Resources_Project/datasets/Raw_Sliced_Images/" + str(x[77:-4]) + "_" + str(n) + ".png")
+        #little_img.save("/Users/kellenbullock/Desktop/Natural_Resources_Project/datasets/labeled_images/Z2S3_" + str(i) + ".png")
+        n += 1
 
-
-for (i = 0; i <= 960; i + 160):
-    dims = (left + i, up, right + i, bottom)
-    secs = big_img.crop(dims)
-    sections.append(secs)
-
-# Second Row
-
-left = 86
-up = 160 + 104
-right = 160 + 86
-bottom= 320 + 104
-
-for (i = 0; i <= 960; i + 160):
-    dims = (left + i, up, right + i, bottom)
-    secs = big_img.crop(dims)
-    sections.append(secs)
-
-# Third Row
-
-left = 86
-up = 320 + 104
-right = 160 + 86
-bottom = 480 + 104
-for (i = 0; i <= 960; i + 160):
-    dims = (left + i, up, right + i, bottom)
-    secs = big_img.crop(dims)
-    sections.append(secs)
-
-i = 0
-for i in sections:
-    sec = sectionss[i]
-    sec.save("/Users/kellenbullock/Desktop/Natural_Resources_Project/datasets/labeled_images/Z2S3_" + i + ".png")
     
     
 #dims = (left, up, right, bottom)
