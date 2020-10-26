@@ -22,7 +22,7 @@ input_data_path = "/Users/kellenbullock/Desktop/Natural_Resources_Project/datase
 target_data_path = "/Users/kellenbullock/Desktop/Natural_Resources_Project/datasets/labeled_images/"
 img_size = (160, 160)
 num_classes = 2
-batch_size = 32
+batch_size = 2
 
 # Combining 
 input_img_paths = sorted(
@@ -39,9 +39,9 @@ target_img_paths = sorted(
          if fname.endswith(".png")
      ]
 )
-print("Number of samples:", len(input_img_paths))
-for input_path, target_path in zip(input_img_paths, target_img_paths):
-    print(input_path, "|", target_path)
+#print("Number of samples:", len(input_img_paths))
+#for input_path, target_path in zip(input_img_paths, target_img_paths):
+#    print(input_path, "|", target_path)
 
 class Cedar_Trees(keras.utils.Sequence):
     """Helper to iterate over the data (as Numpy arrays)."""
@@ -146,21 +146,21 @@ def get_model(img_size, num_classes):
 model = get_model(img_size, num_classes)
 
 # Split our img paths into a training and a validation set
-val_samples = 4
-random.Random(1337).shuffle(input_img_paths)
-random.Random(1337).shuffle(target_img_paths)
-train_input_img_paths = input_img_paths[-val_samples:]
-train_target_img_paths = target_img_paths[-val_samples:]
+val_samples = 8
+random.Random(2).shuffle(input_img_paths)
+random.Random(2).shuffle(target_img_paths)
+train_input_img_paths = input_img_paths[:-val_samples]
+train_target_img_paths = target_img_paths[:-val_samples]
 val_input_img_paths = input_img_paths[-val_samples:]
 val_target_img_paths = target_img_paths[-val_samples:]
 
 # Create dataset:
-training = Cedar_Trees(batch_size, img_size, input_img_paths, target_img_paths)
+train_gen = Cedar_Trees(batch_size, img_size, input_img_paths, target_img_paths)
 val_gen = Cedar_Trees(batch_size, img_size, val_input_img_paths, val_target_img_paths)
 
 model.compile(optimizer="rmsprop", loss="sparse_categorical_crossentropy")
 callbacks = [keras.callbacks.ModelCheckpoint("Tree_segmentation.h5", save_best_only=True)]
-model.fit(training, epochs=10, callbacks=callbacks, verbose=1)
+model.fit(train_gen, epochs=30, validation_data=val_gen, callbacks=callbacks, verbose=1)
 
 
 val_preds = model.predict(val_gen)
@@ -173,7 +173,7 @@ def display_mask(i):
     display(img)
     
 # Display results for validation image #10
-i = 1
+i = 4
 # Display input image
 display(Image(filename=val_input_img_paths[i]))
 # Display ground-truth target mask
