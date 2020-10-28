@@ -17,12 +17,19 @@ from tensorflow import keras
 import numpy as np
 from tensorflow.keras import layers
 import random
+import re
 
-input_data_path = "/Users/kellenbullock/Desktop/Natural_Resources_Project/datasets/raw_images/"
-target_data_path = "/Users/kellenbullock/Desktop/Natural_Resources_Project/datasets/labeled_images/"
+input_data_path = "/Users/kellenbullock/Desktop/Training_Img_Color"
+target_data_path = "/Users/kellenbullock/Desktop/Training_Img_Label"
 img_size = (160, 160)
 num_classes = 2
 batch_size = 2
+
+def natural_sort(l): 
+    convert = lambda text: int(text) if text.isdigit() else text.lower() 
+    alphanum_key = lambda key: [ convert(c) for c in re.split('([0-9]+)', key) ] 
+    return sorted(l, key = alphanum_key)
+
 
 # Combining 
 input_img_paths = sorted(
@@ -32,6 +39,7 @@ input_img_paths = sorted(
          if fname.endswith(".png")
      ]
 )
+
 target_img_paths = sorted(
     [
          os.path.join(target_data_path, fname)
@@ -39,6 +47,9 @@ target_img_paths = sorted(
          if fname.endswith(".png")
      ]
 )
+
+input_img_paths = natural_sort(input_img_paths)
+target_img_paths = natural_sort(target_img_paths)
 #print("Number of samples:", len(input_img_paths))
 #for input_path, target_path in zip(input_img_paths, target_img_paths):
 #    print(input_path, "|", target_path)
@@ -146,9 +157,9 @@ def get_model(img_size, num_classes):
 model = get_model(img_size, num_classes)
 
 # Split our img paths into a training and a validation set
-val_samples = 8
-random.Random(2).shuffle(input_img_paths)
-random.Random(2).shuffle(target_img_paths)
+val_samples = 6
+random.Random(8).shuffle(input_img_paths)
+random.Random(8).shuffle(target_img_paths)
 train_input_img_paths = input_img_paths[:-val_samples]
 train_target_img_paths = target_img_paths[:-val_samples]
 val_input_img_paths = input_img_paths[-val_samples:]
@@ -160,7 +171,7 @@ val_gen = Cedar_Trees(batch_size, img_size, val_input_img_paths, val_target_img_
 
 model.compile(optimizer="rmsprop", loss="sparse_categorical_crossentropy")
 callbacks = [keras.callbacks.ModelCheckpoint("Tree_segmentation.h5", save_best_only=True)]
-model.fit(train_gen, epochs=30, validation_data=val_gen, callbacks=callbacks, verbose=1)
+model.fit(train_gen, epochs=25, validation_data=val_gen, callbacks=callbacks, verbose=1)
 
 
 val_preds = model.predict(val_gen)
@@ -173,7 +184,7 @@ def display_mask(i):
     display(img)
     
 # Display results for validation image #10
-i = 4
+i = 2
 # Display input image
 display(Image(filename=val_input_img_paths[i]))
 # Display ground-truth target mask
