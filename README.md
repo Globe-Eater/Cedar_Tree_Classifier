@@ -4,33 +4,27 @@
 
 # Usage:
 <ol>
-	<li> Collect data from Google Earth Pro as .png file types.</li>
-	<li> Put the imagery into a folder named Unclassified.</li>
+<li> Collect data from Google Earth Pro as .png file types.</li>
+<li> Put the imagery into a folder named Unclassified.</li>
+<li> Create the enviroment with Anaconda. If Anaconda has not been installed please visit: </li>
 
-	<li> Create the enviroment with Anaconda. If Anaconda has not been installed please visit: </li>
-
-	'''
 	Conda create env -f enviorment.yml
-	'''	
+	
+<li> Activate the enviroment by using the command: </li>
 
-	<li> Activate the enviroment by using the command: </li>
-
-	'''
 	conda activate tensorflow
-	'''
+	
 
-	<li> Run Image_Slicer.c over the folder contraining Unclassified. This will create a new folder containing 160 by 160 slices of the images.<li>
+<li> Run Image_Slicer.c over the folder contraining Unclassified. This will create a new folder containing 160 by 160 slices of the images.<li>
         
-	'''
-	./slice.out
-	'''
- 
-	<li> Run Prediction.py to create black and white images of where Cedar Trees are as white and where they are not as black. This will
-	output the images into a file named predictions. </li>
 
-	'''
-	python prediction.py
-	'''	
+	./slice.out
+
+ 
+<li> Run Prediction.py to create black and white images of where Cedar Trees are as white and where they are not as black. This will
+output the images into a file named predictions. </li>
+
+	python prediction.py	
 </ol>
 
 #  Custom Training:
