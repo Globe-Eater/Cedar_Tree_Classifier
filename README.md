@@ -17,17 +17,16 @@
 
 <li> Run Image_Slicer.c over the folder contraining Unclassified. This will create a new folder containing 160 by 160 slices of the images.<li>
         
-
 	./slice.out
 
- 
-<li> Run Prediction.py to create black and white images of where Cedar Trees are as white and where they are not as black. This will
-output the images into a file named predictions. </li>
+<li> Run Prediction.py to create black and white images of where Cedar Trees are as white and where they are not as black. This will output the images into a file named predictions. </li>
 
 	python prediction.py	
 </ol>
 
-#  Custom Training:
+# Expected Results: 
+
+# Custom Training:
  
 ### Input Data
 <ul>
@@ -49,18 +48,14 @@ better it will be able to classify Cedar Trees from unseen images.</p>
 
 ## Training the model:
 <ol>
-	<li> After you have labeled your images place them in the following folders: training_img, labeled_img. </li>
-	<li> Activate the Anaconda enviorment by: </li>
-	
-	'''
-	conda activate tensorflow
-	'''
-	
-	<li> Run Model_Builder.py by: </li>
+<li> After you have labeled your images place them in the following folders: training_img, labeled_img. </li>
+<li> Activate the Anaconda enviorment by: </li>	
 
-	'''
+	conda activate tensorflow
+
+<li> Run Model_Builder.py by: </li>
+	
 	python Model_Builder.py
-	'''
 
 </ol>
 
