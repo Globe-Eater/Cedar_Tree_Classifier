@@ -32,8 +32,6 @@
 	python prediction.py	
 </ol>
 
-# Expected Results: 
-
 # Custom Training:
  
 ### Input Data
@@ -71,5 +69,3 @@ better it will be able to classify Cedar Trees from unseen images.</p>
 
 ## Getting predictions from your new model:
 <p> By running predction.py the program will use your new model. </p>
-
-
