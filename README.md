@@ -2,7 +2,13 @@
 
 <p> Intended for the use of Google Earth Imagery to identify Cedar Trees within the State of Oklahoma.</p>
 
+### Input Imagery:
+
 ![Aerial Imagery](/example_images/Color_Imagery.jpg)
+
+### Output Image:
+
+![Prediction](/example_images/Label.jpg)
 
 # Usage:
 <ol>
@@ -47,6 +53,8 @@ One will be in normal RGB color the other will require you to edit the imagery m
 paint, blender, photoshop, or varity of image modification software. Paint over the Cedar trees with white. Then run Image_Standarize.c over the 
 labled imagery to convert it to a black and white image. You can do as many or as few as you like. The more input data you give the model the
 better it will be able to classify Cedar Trees from unseen images.</p>
+
+![Manual Labeling](/example_images/Stage_One_Labels.jpg)
 
 ## Training the model:
 <ol>
