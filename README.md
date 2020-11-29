@@ -1,7 +1,8 @@
 # Cedar Tree Image Classifier
 
 <p> Intended for the use of Google Earth Imagery to identify Cedar Trees within the State of Oklahoma.</p>
-![Github Color_Imagery](/example_images/Color_Imagery.jpg)
+
+![Aerial Imagery](/example_images/Color_Imagery.jpg)
 
 # Usage:
 <ol>
