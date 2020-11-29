@@ -8,7 +8,7 @@
 
 ### Output Image:
 
-![Prediction](/example_images/Label.jpg)
+![Prediction](/example_images/Labels.jpg)
 
 # Usage:
 <ol>
