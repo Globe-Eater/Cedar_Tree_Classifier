@@ -2,6 +2,14 @@
 
 <p> Intended for the use of Google Earth Imagery to identify Cedar Trees within the State of Oklahoma.</p>
 
+### Input Imagery:
+
+![Aerial Imagery](/example_images/Color_Imagery.jpg)
+
+### Output Image:
+
+![Prediction](/example_images/Labels.jpg)
+
 # Usage:
 <ol>
 <li> Collect data from Google Earth Pro as .png file types.</li>
@@ -24,8 +32,6 @@
 	python prediction.py	
 </ol>
 
-# Expected Results: 
-
 # Custom Training:
  
 ### Input Data
@@ -46,6 +52,8 @@ paint, blender, photoshop, or varity of image modification software. Paint over 
 labled imagery to convert it to a black and white image. You can do as many or as few as you like. The more input data you give the model the
 better it will be able to classify Cedar Trees from unseen images.</p>
 
+![Manual Labeling](/example_images/Stage_One_Labels.jpg)
+
 ## Training the model:
 <ol>
 <li> After you have labeled your images place them in the following folders: training_img, labeled_img. </li>
@@ -61,5 +69,3 @@ better it will be able to classify Cedar Trees from unseen images.</p>
 
 ## Getting predictions from your new model:
 <p> By running predction.py the program will use your new model. </p>
-
-
