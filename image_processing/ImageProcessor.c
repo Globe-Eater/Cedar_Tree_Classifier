@@ -8,7 +8,7 @@ int main() {
     char * buffer;
     size_t result;
 
-    pimage_read = fopen("Z3S3PNG.png", "r");
+    pimage_read = fopen("/Users/kellenbullock/Desktop/Natural_Resource_project/datasets/raw_images/Z3S3 copy.jpg", "r");
     if (pimage_read == NULL) {fputs ("File error",stderr); exit(1);}
 
     // obtain file size:

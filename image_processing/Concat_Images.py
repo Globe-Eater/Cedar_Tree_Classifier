@@ -78,6 +78,12 @@ thirty_two = []
 thirty_three = []
 thirty_four = []
 
+Zones =  [one, two, three, four, five, six, seven, eight, nine, ten ,eleven, twelve,\
+          thriteen, fourteen, fifteen, sixteen, seventeen, eighteen, nineteen, twenty,\
+          twenty_one, twenty_two, twenty_three, twenty_four, twenty_five, twenty_six, \
+          twenty_seven, twenty_eight, twenty_nine, thirty, thirty_one, thirty_two, thirty_three,
+          thirty_four]
+
 for i in input_img_paths:
     temp = i[82:]
     site = temp[:4]
@@ -152,51 +158,51 @@ for i in input_img_paths:
         thirty_four.append(i)
         
 # Sorting pictures by numerical order
-for i in one:
-    pic_num = i[87:]
-    # row 1
-    if pic_num == '0.png':
-        img_1 = Image.open(i)
-    if pic_num == '1.png':
-        img_2 = Image.open(i)
-    if pic_num == '2.png':
-        img_3 = Image.open(i)
-    if pic_num == '3.png':
-        img_4 = Image.open(i)
-    if pic_num == '4.png':
-        img_5 = Image.open(i)
-    # row 2
-    if pic_num == '5.png':
-        img_6 = Image.open(i)
-    if pic_num == '6.png':
-        img_7 = Image.open(i)
-    if pic_num == '7.png':
-        img_8 = Image.open(i)
-    if pic_num == '8.png':
-        img_9 = Image.open(i)
-    if pic_num == '9.png':
-        img_10 = Image.open(i)
-    # row 3
-    if pic_num == '10.png':
-        img_11 = Image.open(i)
-    if pic_num == '11.png':
-        img_12 = Image.open(i)
-    if pic_num == '12.png':
-        img_13 = Image.open(i)
-    if pic_num == '13.png':
-        img_14 = Image.open(i)
-    if pic_num == '14.png':
-        img_15 = Image.open(i)
+for x in Zones:
+    for i in x:
+        pic_num = i[87:]
+        # row 1
+        if pic_num == '0.png':
+            img_1 = Image.open(i)
+        if pic_num == '1.png':
+            img_2 = Image.open(i)
+        if pic_num == '2.png':
+            img_3 = Image.open(i)
+        if pic_num == '3.png':
+            img_4 = Image.open(i)
+        if pic_num == '4.png':
+            img_5 = Image.open(i)
+        # row 2
+        if pic_num == '5.png':
+            img_6 = Image.open(i)
+        if pic_num == '6.png':
+            img_7 = Image.open(i)
+        if pic_num == '7.png':
+            img_8 = Image.open(i)
+        if pic_num == '8.png':
+            img_9 = Image.open(i)
+        if pic_num == '9.png':
+            img_10 = Image.open(i)
+        # row 3
+        if pic_num == '10.png':
+            img_11 = Image.open(i)
+        if pic_num == '11.png':
+            img_12 = Image.open(i)
+        if pic_num == '12.png':
+            img_13 = Image.open(i)
+        if pic_num == '13.png':
+            img_14 = Image.open(i)
+        if pic_num == '14.png':
+            img_15 = Image.open(i)
 
-row1 = get_concat_h(img_1, img_2, img_3, img_4, img_5)
-row1.show()
-row2 = get_concat_h(img_6, img_7, img_8, img_9, img_10)
-row2.show()
-row3 = get_concat_h(img_11, img_12, img_13, img_14, img_15)
-row3.show()
+        row1 = get_concat_h(img_1, img_2, img_3, img_4, img_5)
+        row1.show()
+        row2 = get_concat_h(img_6, img_7, img_8, img_9, img_10)
+        row2.show()
+        row3 = get_concat_h(img_11, img_12, img_13, img_14, img_15)
+        row3.show() 
+        # final concat:
+        final = get_concat_v(row1, row2, row3)
+        final.show()
+        final.save("/Users/kellenbullock/Desktop/Natural_Resources_Project/datasets/Raw_Sliced_Images/" + str(i[77:-4]) + ".png")
 
-# final concat:
-final = get_concat_v(row1, row2, row3)
-final.show()
-
-# save each site out

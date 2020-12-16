@@ -68,9 +68,7 @@ for x in input_img_paths:
         i.save("/Users/kellenbullock/Desktop/Natural_Resources_Project/datasets/Raw_Sliced_Images/" + str(x[77:-4]) + "_" + str(n) + ".png")
         #little_img.save("/Users/kellenbullock/Desktop/Natural_Resources_Project/datasets/labeled_images/Z2S3_" + str(i) + ".png")
         n += 1
-
-    
-    
+  
 #dims = (left, up, right, bottom)
 #    # Cropping tool
 #secs = big_img.crop(dims)
