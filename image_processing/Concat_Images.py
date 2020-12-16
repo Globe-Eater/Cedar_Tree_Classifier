@@ -9,7 +9,7 @@ import os
 from IPython.display import Image, display
 from PIL import Image
 
-input_data_path = "/Users/kellenbullock/Desktop/Natural_Resources_Project/datasets/Raw_Sliced_Images/"
+input_data_path = "/Users/kellenbullock/Desktop/Natural_Resources_Project/datasets/predictions/"
 
 input_img_paths = sorted(
     [
@@ -37,9 +37,10 @@ def get_concat_v(row1, row2, row3):
 
 #img_1 = Image.open(input_img_paths[0])
 #img_2 = Image.open(input_img_paths[1])
-#img_3 = Image.open(input_img_paths[4])
-#img_4 = Image.open(input_img_paths[5])
-#new = get_concat_h(img_1, img_2, img_3, img_4)
+#img_3 = Image.open(input_img_paths[2])
+#img_4 = Image.open(input_img_paths[3])
+#img_5 = Image.open(input_img_paths[4])
+#new = get_concat_h(img_1, img_2, img_3, img_4, img_5)
 #new.show()
 
 # slice path names and create lists for each picture
@@ -85,7 +86,7 @@ Zones =  [one, two, three, four, five, six, seven, eight, nine, ten ,eleven, twe
           thirty_four]
 
 for i in input_img_paths:
-    temp = i[82:]
+    temp = i[76:-6]
     site = temp[:4]
     # divide sites
     if site == 'Z1S1':
@@ -160,7 +161,7 @@ for i in input_img_paths:
 # Sorting pictures by numerical order
 for x in Zones:
     for i in x:
-        pic_num = i[87:]
+        pic_num = i[81:]
         # row 1
         if pic_num == '0.png':
             img_1 = Image.open(i)
@@ -200,9 +201,9 @@ for x in Zones:
         row2 = get_concat_h(img_6, img_7, img_8, img_9, img_10)
         row2.show()
         row3 = get_concat_h(img_11, img_12, img_13, img_14, img_15)
-        row3.show() 
+        #row3.show() 
         # final concat:
         final = get_concat_v(row1, row2, row3)
-        final.show()
-        final.save("/Users/kellenbullock/Desktop/Natural_Resources_Project/datasets/Raw_Sliced_Images/" + str(i[77:-4]) + ".png")
+        #final.show()
+        final.save("/Users/kellenbullock/Desktop/Natural_Resources_Project/datasets/Raw_Sliced_Images2/" + str(i[76:-4]) + ".png")
 
