@@ -32,3 +32,9 @@ and brightness flux. Ultimately this resulted in very poor predictions on the ed
 flipping, random rotation within 90 degrees, image shearing of 0.1, and brightness flux, resulted
 in very poor performance. All predictions were on the edge of the the output image with almost a 
 completely black center. </p>  
+
+## rotation_gen_10000.h5
+<p> Prediction locations incorrect and often are not large enough. Overall very poor results. 
+Proved that data augmentation might not have been the best solution for this training length.
+Possible model overfitting or images are not being rotated correctly with original image.</p>
+
