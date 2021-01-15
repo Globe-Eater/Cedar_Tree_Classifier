@@ -2,11 +2,9 @@
 # -*- coding: utf-8 -*-
 """
 Created on Fri Nov  6 19:55:05 2020
-
 @author: GlobeEater
 Reads images into the trained model and outputs predictions.
 """
-
 from IPython.display import Image, display
 from tensorflow.keras.preprocessing.image import load_img, save_img
 from Model_Builder_2 import get_model, get_data, display_mask
@@ -18,7 +16,7 @@ import tensorflow as tf
 from tensorflow import keras
 import numpy as np
 
-def main():
+def predictor():
     # Read in data
     input_data_path = "/Users/kellenbullock/Desktop/Natural_Resources_Project/datasets/Unclassified/"
     img_size = (160, 160)
@@ -40,7 +38,7 @@ def main():
     
     # load saved model:
     model = get_model(img_size, num_classes)
-    model.load_weights("/Users/kellenbullock/Desktop/Natural_Resources_Project/models/Normal_Gen_10000.h5")
+    model.load_weights("/Users/kellenbullock/Desktop/Natural_Resources_Project/models/rotation_gen_10000.h5")
     
     # Save Results with numerical ordering:
     images = []
@@ -55,10 +53,10 @@ def main():
     n = 0
     for i in input_img_paths:
         for j in images:
-            img.save("/Users/kellenbullock/Desktop/Natural_Resources_Project/datasets/predictions/" + str(i[77:-4]) + "_" + str(n) + ".png")
+            j.save("/Users/kellenbullock/Desktop/Natural_Resources_Project/datasets/predictions/" + str(i[77:-4]) + "_" + str(n) + ".png")
             n = n + 1
             if n > 14:
                 n = 0
                 
 if __name__ == '__main__':
-    main()
+    predictor()
