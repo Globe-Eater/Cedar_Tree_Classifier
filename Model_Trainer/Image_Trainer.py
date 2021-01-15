@@ -8,42 +8,58 @@ This will train a ML classifier model to detect Cedar Trees.
 @author: GlobeEater
 """
 
-import pandas as pd
 import tensorflow as tf
-from PIL import image
+import numpy as np
+from tensorflow.keras.preprocessing.image import load_img
+from PIL import Image
 import os
 os.environ["KERAS_BACKEND"] = "plaidml.keras.backend" # Deleteing the first @ will use the gpu if configured prior.
 from sklearn.model_selection import train_test_split
 from keras.models import Sequential
-from keras.layers import Dense, Dropout
+from keras.layers import Dense, Dropout, Activation, Flatten, Conv2D, MaxPooling2D
 import time
 
+input_data = "/Users/kellenbullock/Desktop/square_trees.png"
+target_data = "/Users/kellenbullock/Desktop/Labels_3.png"
+img_size = (584, 584)
+num_classes = 2
+batch_size = 32
 
-image = tf.keras.preprocessing.image.load_img("/Users/kellenbullock/Desktop/Natural_Resources_Project/datasets/raw_images/Z3S3 copy.jpg")
-training_data = tf.keras.preprocessing.image.img_to_array(image)
+X = load_img(input_data, target_size=img_size)
+Y = load_img(target_data, img_size, color_mode="grayscale")
 
-# Train/Test split
-independents = training_data 
-dependent = pd.read_csv("/Users/kellenbullock/Desktop/Natural_Resources_Project/datasets/Labels.csv")
+X = tf.keras.preprocessing.image.img_to_array(X)
+Y = tf.keras.preprocessing.image.img_to_array(Y)
 
-x_train, x_test, y_train, y_test = train_test_split(independents, dependent, test_size=0.2, random_state=42)
+independents = np.zeros((batch_size,) + img_size + (3,), dtype="float32")
+m = independents.reshape(-1, 584, 584, 3) #np.expand_dims(X, 2)
+    
+dependents = np.zeros((batch_size,) + img_size + (1,), dtype="uint8")
+n = dependents.reshape(-1, 584, 584, 1) #np.expand_dims(Y, 2)
+
+x_train, x_test, y_train, y_test = train_test_split(m, n, test_size=0.2, random_state=42)
 
 model = Sequential()
-model.add(Dense(64, input_dim=independents.shape[1], activation='relu'))
-model.add(Dropout(0.5))
-model.add(Dense(64, activation='relu'))
-model.add(Dropout(0.5))
-model.add(Dense(1, activation='sigmoid'))
+model.add(   Conv2D(32, (3,3), input_shape = (x_train.shape[1:])))
+model.add(Activation("relu"))
+model.add(MaxPooling2D(pool_size=(2,2)))
+
+model.add(Conv2D(32, (3,3)))
+model.add(Activation("relu"))
+model.add(MaxPooling2D(pool_size=(2,2)))
+
+model.add(Conv2D(32, (3,3)))
+model.add(Activation('sigmoid'))
 
 model.compile(loss='binary_crossentropy',
-              optimizer='rmsprop',
+              optimizer='adam',
               metrics=['accuracy'])
 
 start = time.time()
-history = model.fit(x_train, y_train, validation_split=0.25, epochs=20, batch_size=32, verbose=1)
+model.fit(x_train, y_train, epochs=10, batch_size=32, verbose=1)
 
-score = model.evaluate(x_test, y_test, batch_size=64)
-model.save('/users/kellenbullock/desktop/shpo/SAVED_MODELS/Propname_Address_LOCATION_model.h5')
+score = model.evaluate(x_test, y_test, batch_size=32)
+model.save("/Users/kellenbullock/Desktop/Natural_Resources_Project/Cedar_classifier.h5")
 print(score)
 end = time.time()
 print("time to run: ", end - start)
