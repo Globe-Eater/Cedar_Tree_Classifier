@@ -6,11 +6,11 @@
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "stb_image_write.h"
 
-int main() {
+int standardize(char *ptr, char *ptr2) {
 
     int width, height, channels;
 
-    unsigned char *trees = stbi_load("/Users/kellenbullock/Desktop/Natural_Resources_Project/datasets/Backup_images/Z2S3_Labels.jpg", &width, &height, &channels, 3);
+    unsigned char *trees = stbi_load(ptr, &width, &height, &channels, 3);
     if (trees == NULL) {
         printf("Image has failed to load.\n");
         exit(1);
@@ -63,7 +63,7 @@ int main() {
         }
     }
 
-    stbi_write_png("/Users/kellenbullock/Desktop/Z2S3_Labels.png", width, height, gray_channels, labels, width * gray_channels);
+    stbi_write_png(ptr2, width, height, gray_channels, labels, width * gray_channels);
     //stbi_write_jpg("/Users/kellenbullock/Desktop/Labels.jpg", width, height, channels, labels, 100);
 
     stbi_image_free(labels);
