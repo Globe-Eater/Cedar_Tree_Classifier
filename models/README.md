@@ -38,3 +38,10 @@ completely black center. </p>
 Proved that data augmentation might not have been the best solution for this training length.
 Possible model overfitting or images are not being rotated correctly with original image.</p>
 
+## more_data_Normal_Gen_3000.h5
+<p> Poor performance, mostly white images with few black blobs. The model is generalizing 
+everything that is green and more is a Cedar Tree.</p>
+
+## flipper_3000.h5
+<p> In this model there is some cedar tree blobbing. However, there is a lot of white streaking.
+It is unknown what is causing this issue. Overall this model underperforms.</p>
