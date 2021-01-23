@@ -9,7 +9,7 @@ from IPython.display import Image, display
 from PIL import Image
 
 def image_slicer():
-    input_data_path = "/Users/kellenbullock/Desktop/Natural_Resources_Project/datasets/Unclassified/"
+    input_data_path = "/Users/kellenbullock/Desktop/Natural_Resources_Project/datasets/Color_Stage/"
     
     input_img_paths = sorted(
         [
@@ -62,7 +62,7 @@ def image_slicer():
             i = i + 160
         n = 0
         for i in sections:
-            i.save("/Users/kellenbullock/Desktop/Natural_Resources_Project/datasets/Raw_Sliced_Images/" + str(x[77:-4]) + "_" + str(n) + ".png")
+            i.save("/Users/kellenbullock/Desktop/Natural_Resources_Project/datasets/Training_Img_Color/" + str(x[76:-4]) + "_" + str(n)  + ".png")
             #little_img.save("/Users/kellenbullock/Desktop/Natural_Resources_Project/datasets/labeled_images/Z2S3_" + str(i) + ".png")
             n += 1
 if __name__ == '__main__':
