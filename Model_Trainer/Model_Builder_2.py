@@ -18,11 +18,11 @@ from tensorflow.keras import layers
 import re
 
 def get_data():
-    input_data_path = "/Users/kellenbullock/Desktop/Training_Img_Color"
-    target_data_path = "/Users/kellenbullock/Desktop/Training_Img_Label"
+    input_data_path = "/Users/kellenbullock/Desktop/Natural_Resources_Project/datasets/Training_Img_Color"
+    target_data_path = "/Users/kellenbullock/Desktop/Natural_Resources_Project/datasets/Training_Img_Label"
     img_size = (160, 160)
     num_classes = 2
-    batch_size = 28
+    batch_size = 140
     
     def natural_sort(l): 
         convert = lambda text: int(text) if text.isdigit() else text.lower() 
