@@ -30,7 +30,7 @@ def image_slicer():
         bottom = 160 + 104
         
         i = up
-        while i <= 960:
+        while i <= 3252:
             dims = (left + i, up, right + i, bottom)
             secs = big_img.crop(dims)
             sections.append(secs)
@@ -42,7 +42,7 @@ def image_slicer():
         bottom= 320 + 104
         
         i = up
-        while i <= 960:
+        while i <= 3252:
             dims = (left + i, up, right + i, bottom)
             secs = big_img.crop(dims)
             sections.append(secs)
@@ -55,14 +55,14 @@ def image_slicer():
         bottom = 480 + 104
         
         i = up
-        while i <= 960:
+        while i <= 3252:
             dims = (left + i, up, right + i, bottom)
             secs = big_img.crop(dims)
             sections.append(secs)
             i = i + 160
         n = 0
         for i in sections:
-            i.save("/Users/kellenbullock/Desktop/Natural_Resources_Project/datasets/Training_Img_Color/" + str(x[76:-4]) + "_" + str(n)  + ".png")
+            i.save("/Users/kellenbullock/Desktop/Natural_Resources_Project/datasets/Training_Img_Color/" + str(x[76:-4]) + "_" + str(n) + ".png")
             #little_img.save("/Users/kellenbullock/Desktop/Natural_Resources_Project/datasets/labeled_images/Z2S3_" + str(i) + ".png")
             n += 1
 if __name__ == '__main__':
