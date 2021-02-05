@@ -1,16 +1,24 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "stb_image_write.h"
 
-int main() {
+#include "Standardize_labels.h"
+
+void connect() {
+    printf("Connected to C extension... \n");
+}
+
+void std_image(const char *p1, const char *p2) {
 
     int width, height, channels;
-
-    unsigned char *trees = stbi_load("/Users/kellenbullock/Desktop/Natural_Resources_Project/datasets/Stage_1/Z4S8_labeled.jpg" , &width, &height, &channels, 3);
+    printf("%s\n", p1);
+    printf("%s\n", p2);
+    unsigned char *trees = stbi_load(p1, &width, &height, &channels, 3);
     if (trees == NULL) {
         printf("Image has failed to load.\n");
         exit(1);
@@ -63,12 +71,12 @@ int main() {
         }
     }
 
-    stbi_write_png("/Users/kellenbullock/Desktop/Natural_Resources_Project/datasets/Stage_2/Z4S8_labeled.png", width, height, gray_channels, labels, width * gray_channels);
+    stbi_write_png(p2, width, height, gray_channels, labels, width * gray_channels);
     //stbi_write_jpg("/Users/kellenbullock/Desktop/Labels.jpg", width, height, channels, labels, 100);
 
     stbi_image_free(labels);
     stbi_image_free(trees);
-    return 0;
+    
 }
 
 
