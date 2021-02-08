@@ -45,3 +45,9 @@ everything that is green and more is a Cedar Tree.</p>
 ## flipper_3000.h5
 <p> In this model there is some cedar tree blobbing. However, there is a lot of white streaking.
 It is unknown what is causing this issue. Overall this model underperforms.</p>
+
+## Extreme_data_flipper_10000.h5
+<p> Clueless would be the best way to describe this model. Returns a complete positive prediction
+for every input image. Only a few black pixels (negatives) are returned at all. Picture number 250
+a grass field returned alomst a complete positive cedar tree prediction. </p>
+
