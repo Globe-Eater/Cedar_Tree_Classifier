@@ -51,3 +51,19 @@ It is unknown what is causing this issue. Overall this model underperforms.</p>
 for every input image. Only a few black pixels (negatives) are returned at all. Picture number 250
 a grass field returned alomst a complete positive cedar tree prediction. </p>
 
+# 532_2000_series.h5
+
+## 532_rotation_2000.h5
+<p> Rotations helps shape the cedar tree clusters but there are issues with positive id.
+In cases where there are no cedars present the model will label small clusters at edges of images.
+</p>
+
+## 532_rotation_hor_2000.h5
+<p> Positive id shapes are too small and not labeled correctly. </p>
+
+## 532_rotation_vertical_2000.h5
+<p> Positive ids are incorrect and model is stretching the positives causing streaking predictions
+</p>
+
+## 532_vertical_flip_2000.h5
+<p> Will not produce any positive predictions. Model returns all negatives. </p>
